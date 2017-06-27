@@ -113,6 +113,16 @@ namespace my {
 				return *this;
 			}
 
+			iterator& operator--() {
+				if (auto temp = _ptr->_before.lock()) {
+					_ptr = temp;
+				}
+				else {
+					_ptr = nullptr;
+				}
+				return *this;
+			}
+
 			friend bool operator!=(typename const list::iterator& c1, typename const list::iterator & c2) {
 				if (c1._ptr != c2._ptr) {
 					return true;
@@ -156,6 +166,14 @@ namespace my {
 		iterator end() {
 			return iterator();
 		}
+		iterator rbegin() {
+			return iterator(_last);
+		}
+
+		iterator rend() {
+			return iterator();
+		}
+
 
 		template<typename ArgType>
 		void push_front(ArgType&& val) {
@@ -192,7 +210,7 @@ namespace my {
 
 int main() {
 
-	auto p = std::make_shared<my::list<A>>();
+	/*auto p = std::make_shared<my::list<A>>();
 	p->push_front(10);
 	p->push_front(6);
 	auto pp = std::make_shared<my::list<A>>();
@@ -204,14 +222,14 @@ int main() {
 	p.reset();
 	for (auto q : *pp) {
 		std::cout << *q << std::endl;
-	}
+	}*/
 	A f(1);
 	my::list<A> listA{};
 	listA.push_front(std::move(A(5)));
 	listA.push_front(A(4));
 	listA.push_front(A(3));
 	listA.push_front(f);
-	auto b = listA.begin();
+	/*auto b = listA.begin();
 	auto it_end = listA.end();
 	while (b != it_end) {
 		std::cout << **b << std::endl;
@@ -219,6 +237,18 @@ int main() {
 	}
 	for (auto aaa : listA) {
 		std::cout << *aaa << std::endl;
+	}*/
+	for (auto it = std::begin(listA); it != std::end(listA); ++it) {
+		std::cout << **it << std::endl;
 	}
+	std::cout << std::endl;
+	for (auto itR = std::rbegin(listA); itR != std::rend(listA); --itR) {
+		std::cout << **itR << std::endl;
+	}
+	/*auto t = listA.rbegin();
+	while (t != listA.rend()) {
+		std::cout << **t << std::endl;
+		--t;
+	}*/
 	return 0;
 }
