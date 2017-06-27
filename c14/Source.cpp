@@ -245,10 +245,10 @@ int main() {
 	for (auto itR = std::rbegin(listA); itR != std::rend(listA); --itR) {
 		std::cout << **itR << std::endl;
 	}
-	/*auto t = listA.rbegin();
+	auto t = listA.rbegin();
 	while (t != listA.rend()) {
 		std::cout << **t << std::endl;
 		--t;
-	}*/
+	}
 	return 0;
 }
